@@ -13,7 +13,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.TieredItem;
-import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.event.TickEvent.PlayerTickEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.living.LivingKnockBackEvent;
@@ -33,13 +32,17 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onEntityHurt(LivingHurtEvent event) {
-		if (EntityHelper.isPigEntity(event.getEntityLiving())) {
+		if (EntityHelper.isPiglinMob(event.getEntityLiving())) {
 			DamageSource source = event.getSource();
 			if (source instanceof EntityDamageSource && !(source instanceof IndirectEntityDamageSource)) {
 				if (source.getEntity()instanceof LivingEntity attacker) {
 					if (attacker.getItemInHand(InteractionHand.MAIN_HAND).getItem()instanceof TieredItem weapon) {
 						if (weapon.getTier() == ModTiers.ANTILINITE) {
 							event.setAmount(event.getAmount() * 2);
+							if (event.getEntity().level instanceof ServerLevel level) {
+								LivingEntity entity = event.getEntityLiving();
+								level.sendParticles(Registration.ANTILINITE_ATTACK.get(), entity.getX(), entity.getY() + 1.8, entity.getZ(), (int) event.getAmount(), 0.2, 0.2, 0.2, 0.2);
+							}
 						}
 					}
 				}
@@ -54,10 +57,10 @@ public class EventHandler {
 		if (reach >= 1.0F) {
 			player.level
 					.getNearbyEntities(LivingEntity.class,
-							TargetingConditions.forCombat().range(reach).selector(EntityHelper::isPigEntity), player,
+							TargetingConditions.forCombat().range(reach).selector(EntityHelper::isPiglinMob), player,
 							player.getBoundingBox().inflate(reach))
 					.stream()
-					.filter(EntityHelper::isPigEntity)
+					.filter(EntityHelper::isPiglinMob)
 					.forEach(entity -> {
 						noKnockbackEntity = entity;
 						float damage = (float) ((4.0 - Math.sqrt(Math.sqrt(entity.distanceToSqr(player)))) * 0.125F * reach);

@@ -1,7 +1,7 @@
 package ambossmann.antilinite.setup;
 
+import ambossmann.antilinite.AttackParticle;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.particle.HeartParticle;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -17,7 +17,7 @@ public class ClientSetup {
 	@SubscribeEvent
 	public static void onParticleRegistry(ParticleFactoryRegisterEvent event) {
 		Minecraft.getInstance().particleEngine.register(Registration.ANTILINITE_ATTACK.get(),
-		HeartParticle.Provider::new);
+		AttackParticle.Provider::new);
 	}
 
 }
