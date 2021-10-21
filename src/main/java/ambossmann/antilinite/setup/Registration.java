@@ -3,6 +3,7 @@ package ambossmann.antilinite.setup;
 import static ambossmann.antilinite.Antilinite.MOD_EVENT_BUS;
 import static ambossmann.antilinite.Antilinite.MOD_ID;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -115,6 +116,10 @@ public class Registration {
 					() -> new BlockItem(block.get(), properties));
 			BLOCK_ITEMS.put(block, blockItem);
 		});
+	}
+	
+	public static Collection<RegistryObject<Block>> getBlocks() {
+		return BLOCKS.getEntries();
 	}
 
 	public static RegistryObject<BlockItem> getBlockItem(RegistryObject<? extends Block> block) {
