@@ -2,6 +2,8 @@ package ambossmann.antilinite.util;
 
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.EnderMan;
+import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.monster.ZombifiedPiglin;
 import net.minecraft.world.entity.monster.piglin.AbstractPiglin;
 import net.minecraft.world.item.ArmorItem;
@@ -27,5 +29,9 @@ public class EntityHelper {
 	
 	public static boolean isPiglinMob(Entity entity) {
 		return entity instanceof AbstractPiglin || entity instanceof ZombifiedPiglin;
+	}
+	
+	public static boolean isEnderMob(Entity entity) {
+		return entity instanceof EnderMan || entity instanceof Endermite;
 	}
 }

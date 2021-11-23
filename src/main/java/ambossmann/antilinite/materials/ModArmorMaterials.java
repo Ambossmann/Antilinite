@@ -10,7 +10,9 @@ import net.minecraft.world.item.crafting.Ingredient;
 public enum ModArmorMaterials implements ArmorMaterial {
 
 	ANTILINITE("antilinite:antilinite", 35, new int[] { 3, 6, 8, 3 }, 12, SoundEvents.TURTLE_HURT, 2.6F, 0.01F,
-			Ingredient.of(Registration.ANTILINITE_INGOT.get()));
+			Ingredient.of(Registration.ANTILINITE_INGOT.get())),
+	ANTERIUM("antilinite:anterium", 35, new int[] { 3, 6, 8, 3 }, 12, SoundEvents.TURTLE_HURT, 2.6F, 0.01F,
+			Ingredient.of(Registration.ANTERIUM.get()));
 
 	private static final int[] HEALTH_PER_SLOT = new int[] { 13, 15, 16, 11 };
 	private final String name;

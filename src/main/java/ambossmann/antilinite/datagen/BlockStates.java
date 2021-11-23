@@ -20,9 +20,7 @@ public class BlockStates extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
-		registerStandardBlock(Registration.ANTILINITE_BLOCK);
-		registerStandardBlock(Registration.ANTILINITE_ORE);
-		registerStandardBlock(Registration.RAW_ANTILINITE_BLOCK);
+		Registration.getBlocks().stream().forEach(this::registerStandardBlock);
 	}
 	
 	private void registerStandardBlock(RegistryObject<? extends Block> registryBlock) {

@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import ambossmann.antilinite.AntiliniteCreativeTab;
+import ambossmann.antilinite.items.AnteriumArmorItem;
 import ambossmann.antilinite.items.AntiliniteArmorItem;
 import ambossmann.antilinite.materials.ModTiers;
 import net.minecraft.core.particles.ParticleType;
@@ -48,6 +49,9 @@ public class Registration {
 	// Items
 	public static final RegistryObject<Item> ANTILINITE_INGOT = ITEMS.register("antilinite_ingot",
 			() -> new Item(new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+	
+	public static final RegistryObject<Item> ANTERIUM = ITEMS.register("anterium",
+			() -> new Item(new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
 
 	public static final RegistryObject<Item> GOLDEN_ROD = ITEMS.register("golden_rod",
 			() -> new Item(new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
@@ -58,6 +62,7 @@ public class Registration {
 	public static final RegistryObject<Item> ANTILINITE_NUGGET = ITEMS.register("antilinite_nugget",
 			() -> new Item(new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
 
+	//ArmorMat
 	public static final RegistryObject<AntiliniteArmorItem> ANTILINITE_HELMET = ITEMS.register("antilinite_helmet",
 			() -> new AntiliniteArmorItem(EquipmentSlot.HEAD,
 					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
@@ -75,6 +80,24 @@ public class Registration {
 			() -> new AntiliniteArmorItem(EquipmentSlot.FEET,
 					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
 
+	public static final RegistryObject<AnteriumArmorItem> ANTERIUM_HELMET = ITEMS.register("anterium_helmet",
+			() -> new AnteriumArmorItem(EquipmentSlot.HEAD,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<AnteriumArmorItem> ANTERIUM_CHESTPLATE = ITEMS.register(
+			"anterium_chestplate",
+			() -> new AnteriumArmorItem(EquipmentSlot.CHEST,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<AnteriumArmorItem> ANTERIUM_LEGGINGS = ITEMS.register("anterium_leggings",
+			() -> new AnteriumArmorItem(EquipmentSlot.LEGS,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<AnteriumArmorItem> ANTERIUM_BOOTS = ITEMS.register("anterium_boots",
+			() -> new AnteriumArmorItem(EquipmentSlot.FEET,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	//Tools
 	public static final RegistryObject<SwordItem> ANTILINITE_SWORD = ITEMS.register("antilinite_sword",
 			() -> new SwordItem(ModTiers.ANTILINITE, 3, -2.4F,
 					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
@@ -95,6 +118,26 @@ public class Registration {
 			() -> new HoeItem(ModTiers.ANTILINITE, -4, 0.0F,
 					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
 
+	public static final RegistryObject<SwordItem> ANTERIUM_SWORD = ITEMS.register("anterium_sword",
+			() -> new SwordItem(ModTiers.ANTERIUM, 3, -2.4F,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<ShovelItem> ANTERIUM_SHOVEL = ITEMS.register("anterium_shovel",
+			() -> new ShovelItem(ModTiers.ANTERIUM, 0.9F, -3.0F,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<PickaxeItem> ANTERIUM_PICKAXE = ITEMS.register("anterium_pickaxe",
+			() -> new PickaxeItem(ModTiers.ANTERIUM, 1, -2.8F,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<AxeItem> ANTERIUM_AXE = ITEMS.register("anterium_axe",
+			() -> new AxeItem(ModTiers.ANTERIUM, 4.6F, -3.0F,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
+	public static final RegistryObject<HoeItem> ANTERIUM_HOE = ITEMS.register("anterium_hoe",
+			() -> new HoeItem(ModTiers.ANTERIUM, -4, 0.0F,
+					new Item.Properties().tab(AntiliniteCreativeTab.INSTANCE)));
+
 	// Blocks
 	public static final RegistryObject<Block> ANTILINITE_BLOCK = BLOCKS.register("antilinite_block",
 			() -> new Block(Properties.of(Material.METAL).sound(SoundType.METAL)));
@@ -104,9 +147,18 @@ public class Registration {
 
 	public static final RegistryObject<Block> RAW_ANTILINITE_BLOCK = BLOCKS.register("raw_antilinite_block",
 			() -> new Block(Properties.of(Material.METAL).sound(SoundType.METAL)));
+	
+	public static final RegistryObject<Block> ANTERIUM_BLOCK = BLOCKS.register("anterium_block",
+			() -> new Block(Properties.of(Material.METAL).sound(SoundType.METAL)));
+
+	public static final RegistryObject<Block> ANTERIUM_ORE = BLOCKS.register("anterium_ore",
+			() -> new Block(Properties.of(Material.STONE).sound(SoundType.STONE)));
 
 	// Particles
 	public static final RegistryObject<SimpleParticleType> ANTILINITE_ATTACK = PARTICLES.register("antilinite_attack",
+			() -> new SimpleParticleType(false));
+	
+	public static final RegistryObject<SimpleParticleType> ANTERIUM_ATTACK = PARTICLES.register("anterium_attack",
 			() -> new SimpleParticleType(false));
 
 	public static void registerBlockItems() {
@@ -117,7 +169,7 @@ public class Registration {
 			BLOCK_ITEMS.put(block, blockItem);
 		});
 	}
-	
+
 	public static Collection<RegistryObject<Block>> getBlocks() {
 		return BLOCKS.getEntries();
 	}

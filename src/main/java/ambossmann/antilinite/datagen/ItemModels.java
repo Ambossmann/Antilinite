@@ -22,17 +22,27 @@ public class ItemModels extends ItemModelProvider {
 		registerGeneratedItem(Registration.GOLDEN_ROD);
 		registerGeneratedItem(Registration.RAW_ANTILINITE);
 		registerGeneratedItem(Registration.ANTILINITE_NUGGET);
+		registerGeneratedItem(Registration.ANTERIUM);
 		
 		registerGeneratedItem(Registration.ANTILINITE_HELMET);
 		registerGeneratedItem(Registration.ANTILINITE_CHESTPLATE);
 		registerGeneratedItem(Registration.ANTILINITE_LEGGINGS);
 		registerGeneratedItem(Registration.ANTILINITE_BOOTS);
+		registerGeneratedItem(Registration.ANTERIUM_HELMET);
+		registerGeneratedItem(Registration.ANTERIUM_CHESTPLATE);
+		registerGeneratedItem(Registration.ANTERIUM_LEGGINGS);
+		registerGeneratedItem(Registration.ANTERIUM_BOOTS);
 		
 		registerHandheldItem(Registration.ANTILINITE_SWORD);
 		registerHandheldItem(Registration.ANTILINITE_SHOVEL);
 		registerHandheldItem(Registration.ANTILINITE_PICKAXE);
 		registerHandheldItem(Registration.ANTILINITE_AXE);
 		registerHandheldItem(Registration.ANTILINITE_HOE);
+		registerHandheldItem(Registration.ANTERIUM_SWORD);
+		registerHandheldItem(Registration.ANTERIUM_SHOVEL);
+		registerHandheldItem(Registration.ANTERIUM_PICKAXE);
+		registerHandheldItem(Registration.ANTERIUM_AXE);
+		registerHandheldItem(Registration.ANTERIUM_HOE);
 	}
 
 	private ItemModelBuilder registerGeneratedItem(RegistryObject<? extends Item> registryItem) {

@@ -6,7 +6,8 @@ import net.minecraft.world.item.crafting.Ingredient;
 
 public enum ModTiers implements Tier {
 	
-	ANTILINITE(4, 1820, 8.7F, 4.0F, 12, Ingredient.of(Registration.ANTILINITE_INGOT.get()));
+	ANTILINITE(4, 1820, 8.7F, 4.0F, 12, Ingredient.of(Registration.ANTILINITE_INGOT.get())),
+	ANTERIUM(4, 1820, 8.7F, 4.0F, 12, Ingredient.of(Registration.ANTERIUM.get()));
 
 	private final int level;
 	private final int uses;

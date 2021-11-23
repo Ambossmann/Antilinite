@@ -20,6 +20,7 @@ public class Antilinite {
 	public static final IEventBus MOD_EVENT_BUS = FMLJavaModLoadingContext.get().getModEventBus();
 
 	public Antilinite() {
+		
 		Registration.init();
 		
 		MOD_EVENT_BUS.addListener(this::setup);
