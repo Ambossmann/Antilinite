@@ -28,6 +28,8 @@ public class Antilinite {
 		MinecraftForge.EVENT_BUS.register(this);
 		
 		MinecraftForge.EVENT_BUS.register(EventHandler.class);
+		
+//		new ModMaterial(Arrays.asList(MaterialParts.MATERIAL), MOD_ID, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, null, null, 0, 0);
 	}
 
 	private void setup(final FMLCommonSetupEvent event) {

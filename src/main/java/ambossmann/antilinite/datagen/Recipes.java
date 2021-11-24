@@ -2,6 +2,7 @@ package ambossmann.antilinite.datagen;
 
 import java.util.function.Consumer;
 
+import ambossmann.antilinite.materials.MaterialParts;
 import ambossmann.antilinite.setup.Registration;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
 import net.minecraft.data.DataGenerator;
@@ -14,6 +15,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
 import net.minecraftforge.fmllegacy.RegistryObject;
 
@@ -27,19 +29,33 @@ public class Recipes extends RecipeProvider {
 		super(generator);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	protected void buildCraftingRecipes(Consumer<FinishedRecipe> consumer) {
 
-		registerCompressionAndDecompression(Registration.getBlockItem(Registration.ANTILINITE_BLOCK),
-				Registration.ANTILINITE_INGOT, 9, consumer);
+		registerCompressionAndDecompression(
+				Registration.getBlockItem(
+						(RegistryObject<? extends Block>) Registration.ANTILINITE.getPart(MaterialParts.BLOCK)),
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.MATERIAL), 9, consumer);
 
-		registerCompressionAndDecompression(Registration.ANTILINITE_INGOT, Registration.ANTILINITE_NUGGET, 9, consumer);
+		registerCompressionAndDecompression(
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.MATERIAL),
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.NUGGET), 9, consumer);
 
-		registerCompressionAndDecompression(Registration.getBlockItem(Registration.RAW_ANTILINITE_BLOCK),
-				Registration.RAW_ANTILINITE, 4, consumer);
+		registerCompressionAndDecompression(Registration.getBlockItem(
+				(RegistryObject<? extends Block>) Registration.ANTILINITE.getPart(MaterialParts.RAW_MATERIAL_BLOCK)),
+				(RegistryObject<? extends Item>) Registration.ANTILINITE
+						.getPart(MaterialParts.RAW_MATERIAL),
+				4, consumer);
 
-		registerSmeltingRecipe(Registration.ANTILINITE_INGOT, Registration.RAW_ANTILINITE, 2.0F, consumer);
-		registerBlastingRecipe(Registration.ANTILINITE_INGOT, Registration.RAW_ANTILINITE, 2.0F, consumer);
+		registerSmeltingRecipe(
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.MATERIAL),
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.RAW_MATERIAL), 2.0F,
+				consumer);
+		registerBlastingRecipe(
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.MATERIAL),
+				(RegistryObject<? extends Item>) Registration.ANTILINITE.getPart(MaterialParts.RAW_MATERIAL), 2.0F,
+				consumer);
 
 		ShapedRecipeBuilder.shaped(Registration.GOLDEN_ROD.get(), 3)
 				.pattern("g")

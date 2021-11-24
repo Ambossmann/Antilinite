@@ -1,9 +1,9 @@
 package ambossmann.antilinite;
 
-import ambossmann.antilinite.materials.ModArmorMaterials;
-import ambossmann.antilinite.materials.ModTiers;
+import ambossmann.antilinite.materials.MaterialParts;
 import ambossmann.antilinite.setup.Registration;
 import ambossmann.antilinite.util.EntityHelper;
+import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
@@ -37,11 +37,15 @@ public class EventHandler {
 			if (source instanceof EntityDamageSource && !(source instanceof IndirectEntityDamageSource)) {
 				if (source.getEntity()instanceof LivingEntity attacker) {
 					if (attacker.getItemInHand(InteractionHand.MAIN_HAND).getItem()instanceof TieredItem weapon) {
-						if (weapon.getTier() == ModTiers.ANTILINITE) {
+						if (weapon.getTier() == Registration.ANTILINITE.getToolTier()) {
 							event.setAmount(event.getAmount() * 2);
 							if (event.getEntity().level instanceof ServerLevel level) {
 								LivingEntity entity = event.getEntityLiving();
-								level.sendParticles(Registration.ANTILINITE_ATTACK.get(), entity.getX(), entity.getY() + 1.8, entity.getZ(), (int) event.getAmount(), 0.2, 0.2, 0.2, 0.2);
+								level.sendParticles(
+										(SimpleParticleType) Registration.ANTILINITE
+												.getPart(MaterialParts.ATTACK_PARTICLE).get(),
+										entity.getX(), entity.getY() + 1.8, entity.getZ(), (int) event.getAmount(), 0.2,
+										0.2, 0.2, 0.2);
 							}
 						}
 					}
@@ -53,7 +57,7 @@ public class EventHandler {
 	@SubscribeEvent
 	public static void onTick(PlayerTickEvent event) {
 		Player player = event.player;
-		double reach = Math.floor(EntityHelper.entityArmorPieces(player, ModArmorMaterials.ANTILINITE)) * 4.0;
+		double reach = Math.floor(EntityHelper.entityArmorPieces(player, Registration.ANTILINITE.getArmorMat())) * 4.0;
 		if (reach >= 1.0F) {
 			player.level
 					.getNearbyEntities(LivingEntity.class,
@@ -63,10 +67,14 @@ public class EventHandler {
 					.filter(EntityHelper::isPiglinMob)
 					.forEach(entity -> {
 						noKnockbackEntity = entity;
-						float damage = (float) ((4.0 - Math.sqrt(Math.sqrt(entity.distanceToSqr(player)))) * 0.125F * reach);
+						float damage = (float) ((4.0 - Math.sqrt(Math.sqrt(entity.distanceToSqr(player)))) * 0.125F
+								* reach);
 						entity.hurt(new EntityDamageSource("magic", player).setMagic(), damage);
 						if (entity.level instanceof ServerLevel level) {
-							level.sendParticles(Registration.ANTILINITE_ATTACK.get(), entity.getX(), entity.getY() + 1.8, entity.getZ(), 1, 0.2, 0.2, 0.2, 0.2);
+							level.sendParticles(
+									(SimpleParticleType) Registration.ANTILINITE.getPart(MaterialParts.ATTACK_PARTICLE)
+											.get(),
+									entity.getX(), entity.getY() + 1.8, entity.getZ(), 1, 0.2, 0.2, 0.2, 0.2);
 						}
 					});
 		}

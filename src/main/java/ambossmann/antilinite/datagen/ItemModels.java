@@ -1,6 +1,8 @@
 package ambossmann.antilinite.datagen;
 
 import ambossmann.antilinite.Antilinite;
+import ambossmann.antilinite.materials.MaterialParts;
+import ambossmann.antilinite.materials.ModMaterial;
 import ambossmann.antilinite.setup.Registration;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.resources.ResourceLocation;
@@ -18,31 +20,39 @@ public class ItemModels extends ItemModelProvider {
 
 	@Override
 	protected void registerModels() {
-		registerGeneratedItem(Registration.ANTILINITE_INGOT);
 		registerGeneratedItem(Registration.GOLDEN_ROD);
-		registerGeneratedItem(Registration.RAW_ANTILINITE);
-		registerGeneratedItem(Registration.ANTILINITE_NUGGET);
-		registerGeneratedItem(Registration.ANTERIUM);
 		
-		registerGeneratedItem(Registration.ANTILINITE_HELMET);
-		registerGeneratedItem(Registration.ANTILINITE_CHESTPLATE);
-		registerGeneratedItem(Registration.ANTILINITE_LEGGINGS);
-		registerGeneratedItem(Registration.ANTILINITE_BOOTS);
-		registerGeneratedItem(Registration.ANTERIUM_HELMET);
-		registerGeneratedItem(Registration.ANTERIUM_CHESTPLATE);
-		registerGeneratedItem(Registration.ANTERIUM_LEGGINGS);
-		registerGeneratedItem(Registration.ANTERIUM_BOOTS);
-		
-		registerHandheldItem(Registration.ANTILINITE_SWORD);
-		registerHandheldItem(Registration.ANTILINITE_SHOVEL);
-		registerHandheldItem(Registration.ANTILINITE_PICKAXE);
-		registerHandheldItem(Registration.ANTILINITE_AXE);
-		registerHandheldItem(Registration.ANTILINITE_HOE);
-		registerHandheldItem(Registration.ANTERIUM_SWORD);
-		registerHandheldItem(Registration.ANTERIUM_SHOVEL);
-		registerHandheldItem(Registration.ANTERIUM_PICKAXE);
-		registerHandheldItem(Registration.ANTERIUM_AXE);
-		registerHandheldItem(Registration.ANTERIUM_HOE);
+		registerMaterial(Registration.ANTILINITE);
+		registerMaterial(Registration.ANTERIUM);
+	}
+
+	private void registerMaterial(ModMaterial material) {
+		for (MaterialParts part : MaterialParts.values()) {
+			@SuppressWarnings("unchecked")
+			RegistryObject<Item> partItem = (RegistryObject<Item>) material.getPart(part);
+			if (partItem != null) {
+				switch (part) {
+					case HELMET:
+					case CHESTPLATE:
+					case LEGGINGS:
+					case BOOTS:
+					case MATERIAL:
+					case NUGGET:
+					case RAW_MATERIAL:
+						registerGeneratedItem(partItem);
+						break;
+					case SWORD:
+					case SHOVEL:
+					case PICKAXE:
+					case AXE:
+					case HOE:
+						registerHandheldItem(partItem);
+						break;
+					default:
+						break;
+				}
+			}
+		}
 	}
 
 	private ItemModelBuilder registerGeneratedItem(RegistryObject<? extends Item> registryItem) {
@@ -50,7 +60,7 @@ public class ItemModels extends ItemModelProvider {
 		return getBuilder(registryName.getPath()).parent(getExistingFile(mcLoc("item/generated")))
 				.texture("layer0", "item/" + registryName.getPath());
 	}
-	
+
 	private ItemModelBuilder registerHandheldItem(RegistryObject<? extends Item> registryItem) {
 		ResourceLocation registryName = registryItem.get().getRegistryName();
 		return getBuilder(registryName.getPath()).parent(getExistingFile(mcLoc("item/handheld")))
