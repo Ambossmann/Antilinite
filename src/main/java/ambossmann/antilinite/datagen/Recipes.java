@@ -1,5 +1,7 @@
 package ambossmann.antilinite.datagen;
 
+import static ambossmann.antilinite.Antilinite.MOD_ID;
+
 import java.util.function.Consumer;
 
 import ambossmann.antilinite.materials.MaterialParts;
@@ -17,9 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.level.block.Block;
 import net.minecraftforge.common.Tags;
-import net.minecraftforge.fmllegacy.RegistryObject;
-
-import static ambossmann.antilinite.Antilinite.MOD_ID;
+import net.minecraftforge.registries.RegistryObject;
 
 public class Recipes extends RecipeProvider {
 
