@@ -12,11 +12,11 @@ version="${file.jarVersion}"
 
 displayName="Antilinite"
 
-logoFile="examplemod.png"
+logoFile="antilinite.png"
 
-credits="Thanks for this example mod goes to Java"
+credits="Diamant_Duellant for the textures"
 
-authors="Love, Cheese and small house plants"
+authors="Amboss_Mann"
 
 description='''
 '''
