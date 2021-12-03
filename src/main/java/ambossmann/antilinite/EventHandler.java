@@ -1,6 +1,9 @@
 package ambossmann.antilinite;
 
+import java.util.function.Predicate;
+
 import ambossmann.antilinite.materials.MaterialParts;
+import ambossmann.antilinite.materials.ModMaterial;
 import ambossmann.antilinite.setup.Registration;
 import ambossmann.antilinite.util.EntityHelper;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -32,39 +35,46 @@ public class EventHandler {
 
 	@SubscribeEvent
 	public static void onEntityHurt(LivingHurtEvent event) {
-		if (EntityHelper.isPiglinMob(event.getEntityLiving())) {
-			DamageSource source = event.getSource();
-			if (source instanceof EntityDamageSource && !(source instanceof IndirectEntityDamageSource)) {
-				if (source.getEntity()instanceof LivingEntity attacker) {
-					if (attacker.getItemInHand(InteractionHand.MAIN_HAND).getItem()instanceof TieredItem weapon) {
-						if (weapon.getTier() == Registration.ANTILINITE.getToolTier()) {
-							event.setAmount(event.getAmount() * 2);
-							if (event.getEntity().level instanceof ServerLevel level) {
-								LivingEntity entity = event.getEntityLiving();
-								level.sendParticles(
-										(SimpleParticleType) Registration.ANTILINITE
-												.getPart(MaterialParts.ATTACK_PARTICLE).get(),
-										entity.getX(), entity.getY() + 1.8, entity.getZ(), (int) event.getAmount(), 0.2,
-										0.2, 0.2, 0.2);
-							}
-						}
-					}
-				}
+		doubleHitDamage(event, EntityHelper::isPiglinMob, Registration.ANTILINITE);
+		doubleHitDamage(event, EntityHelper::isEnderMob, Registration.ANTERIUM);
+	}
+
+	private static void doubleHitDamage(LivingHurtEvent event, Predicate<LivingEntity> entityChecker, ModMaterial material) {
+		DamageSource source = event.getSource();
+		if (entityChecker.test(event.getEntityLiving()) && source instanceof EntityDamageSource
+				&& !(source instanceof IndirectEntityDamageSource)
+				&& source.getEntity()instanceof LivingEntity attacker
+				&& attacker.getItemInHand(InteractionHand.MAIN_HAND).getItem()instanceof TieredItem weapon
+				&& weapon.getTier() == material.getToolTier()) {
+
+			event.setAmount(event.getAmount() * 2);
+			if (event.getEntity().level instanceof ServerLevel level) {
+				LivingEntity entity = event.getEntityLiving();
+				level.sendParticles(
+						(SimpleParticleType) material.getPart(MaterialParts.ATTACK_PARTICLE).get(),
+						entity.getX(), entity.getY() + entity.getBbHeight()*0.9, entity.getZ(), (int) event.getAmount(), 0.2,
+						0.2, 0.2, 0.2);
 			}
 		}
 	}
 
 	@SubscribeEvent
 	public static void onTick(PlayerTickEvent event) {
+		damageNearbyEntities(event, EntityHelper::isPiglinMob, Registration.ANTILINITE);
+		damageNearbyEntities(event, EntityHelper::isEnderMob, Registration.ANTERIUM);
+	}
+
+	private static void damageNearbyEntities(PlayerTickEvent event, Predicate<LivingEntity> entityChecker,
+			ModMaterial material) {
 		Player player = event.player;
-		double reach = Math.floor(EntityHelper.entityArmorPieces(player, Registration.ANTILINITE.getArmorMat())) * 4.0;
+		double reach = Math.floor(EntityHelper.entityArmorPieces(player, material.getArmorMat())) * 4.0;
 		if (reach >= 1.0F) {
 			player.level
 					.getNearbyEntities(LivingEntity.class,
-							TargetingConditions.forCombat().range(reach).selector(EntityHelper::isPiglinMob), player,
+							TargetingConditions.forCombat().range(reach).selector(entityChecker), player,
 							player.getBoundingBox().inflate(reach))
 					.stream()
-					.filter(EntityHelper::isPiglinMob)
+					.filter(entityChecker)
 					.forEach(entity -> {
 						noKnockbackEntity = entity;
 						float damage = (float) ((4.0 - Math.sqrt(Math.sqrt(entity.distanceToSqr(player)))) * 0.125F
@@ -72,9 +82,10 @@ public class EventHandler {
 						entity.hurt(new EntityDamageSource("magic", player).setMagic(), damage);
 						if (entity.level instanceof ServerLevel level) {
 							level.sendParticles(
-									(SimpleParticleType) Registration.ANTILINITE.getPart(MaterialParts.ATTACK_PARTICLE)
+									(SimpleParticleType) material.getPart(MaterialParts.ATTACK_PARTICLE)
 											.get(),
-									entity.getX(), entity.getY() + 1.8, entity.getZ(), 1, 0.2, 0.2, 0.2, 0.2);
+									entity.getX(), entity.getY() + entity.getBbHeight() * 0.9, entity.getZ(), 1, 0.2,
+									0.2, 0.2, 0.2);
 						}
 					});
 		}
