@@ -7,6 +7,7 @@ import java.util.EnumMap;
 import java.util.List;
 import java.util.function.Supplier;
 
+import ambossmann.antilinite.Antilinite;
 import ambossmann.antilinite.setup.Registration;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.sounds.SoundEvent;
@@ -215,7 +216,7 @@ public class ModMaterial {
 
 		public ArmorMat(String name, int durabilityMultiplier, int[] slotProtections, int enchantmentValue,
 				SoundEvent sound, float toughness, float knockbackResistance, Supplier<Ingredient> repairIngredient) {
-			this.name = name;
+			this.name = Antilinite.MOD_ID + ":" + name;
 			this.durabilityMultiplier = durabilityMultiplier;
 			this.slotProtections = slotProtections;
 			this.enchantmentValue = enchantmentValue;
