@@ -77,8 +77,7 @@ public class EventHandler {
 					.filter(entityChecker)
 					.forEach(entity -> {
 						noKnockbackEntity = entity;
-						float damage = (float) ((4.0 - Math.sqrt(Math.sqrt(entity.distanceToSqr(player)))) * 0.125F
-								* reach);
+						float damage = (float) ((Math.sqrt(reach)/Math.sqrt(entity.distanceTo(player))) * 1F);
 						entity.hurt(new EntityDamageSource("magic", player).setMagic(), damage);
 						if (entity.level instanceof ServerLevel level) {
 							level.sendParticles(
